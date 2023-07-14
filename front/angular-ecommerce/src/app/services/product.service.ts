@@ -8,11 +8,13 @@ import { map} from 'rxjs/operators';
 })
 export class ProductService {
 
-  private baseUrl = 'http://localhost:8080/api/products?size=100';
+  private baseUrl = 'http://localhost:8080/api/products';
 
   constructor(private httpClient: HttpClient) { }
 
-  getProductList(): Observable<Product[]>{
+  getProductList(theCategoryId: number): Observable<Product[]>{
+        // @TODO : 카테고리 ID에 맞는 URL 빌드 
+
     return this.httpClient.get<GetResponse>(this.baseUrl).pipe(
       map(response => response._embedded.products)
     );
