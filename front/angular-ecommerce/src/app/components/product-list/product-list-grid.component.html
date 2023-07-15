@@ -10,9 +10,14 @@
                         <h1>{{ tempProduct.name }}</h1>
                         <div class="price">{{ tempProduct.unitPrice | currency: '$'}}</div>
                         <a href="#" class="primary-btn">장바구니에 추가</a>
+                    </div>
 
                 </div>
 
+                <!-- if products empty-->
+                <div *ngIf="products?.length==0" class="alert alert-warning col-md-12" role="alert">
+                    No products found. 
+                </div>
 
 
             </div>
