@@ -8,7 +8,9 @@ import { Subject } from 'rxjs';
 export class CartService {
   
   cartItems: CartItem[] = [];
+
   totalPrice: Subject<number> = new Subject<number>();
+
   totalQuantity: Subject<number> = new Subject<number>();
 
   constructor() { }
@@ -21,7 +23,7 @@ export class CartService {
     if (this.cartItems.length > 0) {
       // find the item in the cart based on item id
 
-      existingCartItem = this.cartItems.find( tempCartItem => tempCartItem.id)!;
+      
 
       for(let tempCartItem of this.cartItems){
         if(tempCartItem.id === theCartItem.id){
@@ -50,6 +52,7 @@ export class CartService {
       totalPriceValue += currentCartItem.quantity * currentCartItem.unitPrice;
       totalQuantityValue += currentCartItem.quantity;
     }
+    
     this.totalPrice.next(totalPriceValue);
     this.totalQuantity.next(totalQuantityValue);
     

@@ -5,7 +5,7 @@
         <img src="{{ product.imageUrl}}" class="detail-img">
         <h3>{{ product.name}}</h3>
         <div class="price">{{ product.unitPrice | currency: 'USD'}}</div>
-        <a href="#" class="primary-btn"> 장바구니</a>
+        <button (click)="addToCart()" class="btn btn-primary btn-sm"> 장바구니</button>
 
         <hr>
         <h4>상세 설명</h4>
