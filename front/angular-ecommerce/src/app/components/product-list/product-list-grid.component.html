@@ -16,7 +16,7 @@
                         </a>
 
                         <div class="price">{{ tempProduct.unitPrice | currency: '$'}}</div>
-                        <a href="#" class="primary-btn">장바구니에 추가</a>
+                        <button (click)="addToCart(tempProduct)" class="btn btn-primary btn-sm">장바구니에 추가</button>
                     </div>
 
                 </div>
