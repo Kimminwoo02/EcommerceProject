@@ -1,6 +1,7 @@
 <div class="main-content">
     <div class="section-content section-content-p30">
         <div class="container-fluid">
+            <div *ngIf="cartItems.length >0">
 
             <table class="table table-bordered">
                 <tr>
@@ -19,23 +20,47 @@
                     </td>
                     <td>
                         <div class="items">
-                            <label>Quantity:</label> {{ tempCartItem.quantity}}
-                        </div>
+                            <label>수량:</label>
+                            <div class="row no-gutters">
+                                <div class="col">
+                                    <button (click)="incrementQuantity(tempCartItem)" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="col ml-4 mr-2">
+                                    {{ tempCartItem.quantity }}
+                                </div>
 
-                        <p class="mt-2">Subtotal: {{ tempCartItem.quantity * tempCartItem.unitPrice | currency: 'USD' }}</p>
+                                <div class="col">
+                                    <button (click)="decrementQuantity(tempCartItem)" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                                <div class="col-8"></div>
+
+                            </div>
+                        </div>
+                        <button (click)="remove(tempCartItem)" class="btn btn-primary btn-sm mt-2">삭제</button>
+
+                        <p class="mt-2">합계: {{ tempCartItem.quantity * tempCartItem.unitPrice | currency: 'USD' }}</p>
 
                 </tr>
 
                 <tr>
                     <td colspan="2"></td>
                     <td style="font-weight: bold">
-                        <p>Total Quantity: {{ totalQuantity}} </p>
-                        <p>Shipping: FREE</p>
-                        <p>Total Price: {{ totalPrice | currency: 'USD'}}</p>
+                        <p>총 수량: {{ totalQuantity}} </p>
+                        <p>배송비: 무료</p>
+                        <p>총 금액: {{ totalPrice | currency: 'USD'}}</p>
                     </td>
                 </tr>
 
             </table>
+
+            </div>
+            <div *ngIf="cartItems.length == 0 " class="alert alert-warning col-md-12" role="alert">
+                장바구니가 비어있습니다.
+            </div>
 
 
 
