@@ -1,6 +1,7 @@
 <div class="main-content page-m"> 
     <div class="section-content section-content-p30">
         <div class="container-fluid">
+
             <form [formGroup]="checkoutFormGroup" (ngSubmit)="onSubmit()">
                 <div formGroupName="customer" class="form-area">
                     <h3>주문서</h3>
@@ -161,7 +162,85 @@
 
 
 
+                <div formGroupName="creditCard" class="form-area">
 
+                    <h3>신용 카드</h3>
+    
+                        <div class="row">
+                            <div class="col-md-2"><label>카드 종류</label></div>
+                            <div class="col-md-9">
+                                <div class="input-space">
+                                    <select formControlName="cardType">
+                                        <option>Visa</option>
+                                        <option>MaterCard</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="row">
+                            <div class="col-md-2"><label>카드 이름</label></div>
+                            <div class="col-md-9">
+                                <div class="input-space">
+                                    <input formControlName="nameOnCard" type="text">
+                                </div>
+                            </div>
+                        </div>
+                  
+                        <div class="row">
+                            <div class="col-md-2"><label>카드 번호</label></div>
+                            <div class="col-md-9">
+                                <div class="input-space">
+                                    <input formControlName="cardNumber" type="text">
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="col-md-2"><label>일련번호</label></div>
+                            <div class="col-md-9">
+                                <div class="input-space">
+                                    <input formControlName="securityCode" type="text">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-2"><label>만료 월</label></div>
+                            <div class="col-md-9">
+                                <div class="input-space">
+                                    <select formControlName="expirationMonth">
+                                        <option>To - Do</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-2"><label>만료 년도</label></div>
+                            <div class="col-md-9">
+                                <div class="input-space">
+                                    <select formControlName="expirationYear">
+                                        <option>To - Do</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                </div>
+
+                <!-- Order Details -->
+                <div class="form-area">
+                    <h3>주문 확인</h3>
+
+                    <p>총 수량 : {{ totalQuantity }}</p>
+                    <p>배송비 : 무료</p>
+                    <p>총 금액: {{totalPrice | currency:'USD'}}</p>
+                </div>
 
             
                 <div class="text-center">
