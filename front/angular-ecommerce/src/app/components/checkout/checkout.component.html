@@ -82,15 +82,13 @@
                                         {{ country.name }}
                                     </option>
                                 </select>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-2"><label>주소</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="street" type="text">
+                                <div *ngIf="shippingAddressCountry?.invalid && (shippingAddressCountry?.dirty || shippingAddressCountry?.touched)" class="alert alert-danger mt-1">
+                                    <div *ngIf="shippingAddressCountry!.errors!.required">
+                                        국가를 선택하세요!
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -99,13 +97,38 @@
                         <div class="col-md-2"><label>군</label></div>
                         <div class="col-md-9">
                             <div class="input-space">
-                                <input formControlName="city" type="text">
+                                <input formControlName="street" type="text">
+
+                                <div *ngIf="shippingAddressStreet?.invalid && (shippingAddressStreet?.dirty || shippingAddressStreet?.touched)" class="alert alert-danger mt-1">
+                                    <div *ngIf="shippingAddressStreet!.errors!.required || shippingAddressStreet!.errors!.notOnlyWhitespace">
+                                        군을 입력해주세요!
+                                    </div>
+                                    <div *ngIf="shippingAddressStreet!.errors!.minLength">
+                                        길이는 2 이상이어야 합니다!
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-2"><label>도시</label></div>
+                        <div class="col-md-2"><label>시</label></div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="city" type="text">
+
+                                <div *ngIf="shippingAddressCity?.invalid && (shippingAddressCity?.dirty || shippingAddressCity?.touched)" class="alert alert-danger mt-1">
+                                    <div *ngIf="shippingAddressCity!.errors!.required || shippingAddressCity!.errors!.notOnlyWhitespace ">
+                                        시를 입력해주세요
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2"><label>주</label></div>
                         <div class="col-md-9">
                             <div class="input-space">
                                 <select formControlName="state">
@@ -113,6 +136,14 @@
                                         {{ state.name }}
                                     </option>
                                 </select>
+
+                                
+                                <div *ngIf="shippingAddressState?.invalid && (shippingAddressState?.dirty || shippingAddressState?.touched)" class="alert alert-danger mt-1">
+                                    <div *ngIf="shippingAddressState!.errors!.required">
+                                        시를 입력해주세요
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -123,6 +154,13 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="zipCode" type="text">
+
+
+                                <div *ngIf="shippingAddressZipCode?.invalid && (shippingAddressZipCode?.dirty || shippingAddressZipCode?.touched)" class="alert alert-danger mt-1">
+                                    <div *ngIf="shippingAddressZipCode!.errors!.required || shippingAddressZipCode!.errors!.notOnlyWhitespace">
+                                        우편번호를 입력해주세요
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -148,15 +186,12 @@
                                         {{ country.name }}
                                     </option>
                                 </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2"><label>시</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="street" type="text">
+                                
+                                <div *ngIf="billingAddressCountry?.invalid && (billingAddressCountry?.dirty || billingAddressCountry?.touched)" class="alert alert-danger mt-1">
+                                    <div *ngIf="billingAddressCountry!.errors!.required">
+                                        국가를 선택하세요!
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -165,13 +200,43 @@
                         <div class="col-md-2"><label>군</label></div>
                         <div class="col-md-9">
                             <div class="input-space">
-                                <input formControlName="city" type="text">
+                                <input formControlName="street" type="text">
+                                <div *ngIf="billingAddressStreet?.invalid && (billingAddressStreet?.dirty || billingAddressStreet?.touched)" class="alert alert-danger mt-1">
+                                    <div *ngIf="billingAddressStreet!.errors!.required  || billingAddressStreet!.errors!.notOnlyWhitespace">
+                                        군을 입력해주세요
+                                    </div>
+
+                                    <div *ngIf="billingAddressStreet!.errors!.minLength">
+                                        길이는 2 이상이어야 합니다!
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-2"><label>도시</label></div>
+                        <div class="col-md-2"><label>시</label></div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="city" type="text">
+
+                                <div *ngIf="billingAddressCity?.invalid && (billingAddressCity?.dirty || billingAddressCity?.touched)" class="alert alert-danger mt-1">
+                                    <div *ngIf="billingAddressCity!.errors!.required || billingAddressCity!.errors!.notOnlyWhitespace">
+                                        시를 입력해주세요!
+                                    </div>
+
+                                    <div *ngIf="billingAddressCity!.errors!.minLength">
+                                        길이는 2 이상이어야 합니다!
+                                    </div>
+
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2"><label>주</label></div>
                         <div class="col-md-9">
                             <div class="input-space">
                                 <select formControlName="state">
@@ -179,6 +244,12 @@
                                         {{ state.name }}
                                     </option>
                                 </select>
+
+                                <div *ngIf="billingAddressState?.invalid && (billingAddressState?.dirty || billingAddressState?.touched)" class="alert alert-danger mt-1">
+                                    <div *ngIf="billingAddressState!.errors!.required">
+                                        주를 선택해주세요!
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -189,6 +260,19 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="zipCode" type="text">
+
+                                <div *ngIf="billingAddressState?.invalid && (billingAddressState?.dirty || billingAddressState?.touched)" class="alert alert-danger mt-1">
+                                    <div *ngIf="billingAddressState!.errors!.required || billingAddressState!.errors!.notOnlyWhitespace">
+                                        우편번호를 입력해주세요
+                                    </div>
+
+                                    <div *ngIf="billingAddressState!.errors!.minLength">
+                                        길이는 2 이상이어야 합니다!
+                                    </div>
+
+
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -209,6 +293,14 @@
                                         <option>Visa</option>
                                         <option>MaterCard</option>
                                     </select>
+
+                                    <div *ngIf="creditCardType?.invalid && (creditCardType?.dirty || creditCardType?.touched)" class="alert alert-danger mt-1">
+                                        <div *ngIf="creditCardType!.errors!.required || creditCardType!.errors!.notOnlyWhitespace">
+                                            카드를 선택해주세요
+                                        </div>
+    
+                                    </div>
+    
                                 </div>
                             </div>
                         </div>
@@ -218,6 +310,16 @@
                             <div class="col-md-9">
                                 <div class="input-space">
                                     <input formControlName="nameOnCard" type="text">
+
+                                    <div *ngIf="creditCardNameOnCard?.invalid && (creditCardNameOnCard?.dirty || creditCardNameOnCard?.touched)" class="alert alert-danger mt-1">
+                                        <div *ngIf="creditCardNameOnCard!.errors!.required || creditCardNameOnCard!.errors!.notOnlyWhitespace">
+                                            카드 이름을 입력하세요
+                                        </div>
+    
+                                        <div *ngIf="creditCardNameOnCard!.errors!.minLength">
+                                            카드 이름은 최소 2글자 이상입니다!
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -227,6 +329,16 @@
                             <div class="col-md-9">
                                 <div class="input-space">
                                     <input formControlName="cardNumber" type="text">
+
+                                    <div *ngIf="creditCardNumber?.invalid && (creditCardNumber?.dirty || creditCardNumber?.touched)" class="alert alert-danger mt-1">
+                                        <div *ngIf="creditCardNumber!.errors!.required || creditCardNumber!.errors!.notOnlyWhitespace">
+                                            카드 번호를 입력하세요!
+                                        </div>
+    
+                                        <div *ngIf="creditCardNumber!.errors!.pattern">
+                                            카드 번호는 16 자리 입니다!
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -238,6 +350,17 @@
                             <div class="col-md-9">
                                 <div class="input-space">
                                     <input formControlName="securityCode" type="text">
+
+                                    
+                                    <div *ngIf="creditCardSecurityCode?.invalid && (creditCardSecurityCode?.dirty || creditCardSecurityCode?.touched)" class="alert alert-danger mt-1">
+                                        <div *ngIf="creditCardSecurityCode!.errors!.required || creditCardSecurityCode!.errors!.notOnlyWhitespace">
+                                            일련번호를 입력하세요!
+                                        </div>
+    
+                                        <div *ngIf="creditCardSecurityCode!.errors!.pattern">
+                                            일련번호는 3자리 입니다!
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
