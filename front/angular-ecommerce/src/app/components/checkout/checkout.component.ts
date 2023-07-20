@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Form, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Country } from 'src/app/common/country';
+import { Order } from 'src/app/common/order';
+import { OrderItem } from 'src/app/common/order-item';
+import { Purchase } from 'src/app/common/purchase';
 import { State } from 'src/app/common/state';
 import { CartService } from 'src/app/services/cart.service';
+import { CheckoutService } from 'src/app/services/checkout.service';
 import { FormService } from 'src/app/services/form.service';
 import { MinuShopValidators } from 'src/app/validators/minu-shop-validators';
 
@@ -27,7 +32,9 @@ export class CheckoutComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private formService: FormService,
-              private cartService: CartService) { }
+              private cartService: CartService,
+              private checkoutService: CheckoutService,
+              private router: Router) { }
 
   ngOnInit(): void {
 
@@ -158,17 +165,74 @@ export class CheckoutComponent implements OnInit {
 
     if(this.checkoutFormGroup.invalid){
       this.checkoutFormGroup.markAllAsTouched();
+      return;
     }
 
+    let order = new Order();
+    order.totalPrice = this.totalPrice;
+    order.totalQuantity = this.totalQuantity;
 
-    console.log("Handling the submit button");
-    console.log(this.checkoutFormGroup.get('customer')!.value);
-    console.log("the email address is " + this.checkoutFormGroup.get('customer')!.value.email);
+    const cartItems = this.cartService.cartItems;
 
-    console.log("The shipping address country is " + this.checkoutFormGroup.get('shippingAddress')!.value.country.name);
-    console.log("The shipping address state is " + this.checkoutFormGroup.get('shippingAddress')!.value.state.name);
+    // let orderItems: OrderItem[] = [];
+    // for (let i = 0 ; i< cartItems.length; i++){
+    //     orderItems[i] = new OrderItem(cartItems[i]);
+    // }
+
+    let orderItems: OrderItem[] = cartItems.map(tempCartItem => new OrderItem(tempCartItem));
+
+    let purchase = new Purchase();
+
+    purchase.customer = this.checkoutFormGroup.controls['customer'].value;
+    
+    purchase.shippingAddress = this.checkoutFormGroup.controls['shippingAddress'].value;
+    const shippingState: State = JSON.parse(JSON.stringify(purchase.shippingAddress.state));
+    const shippingCountry:Country = JSON.parse(JSON.stringify(purchase.shippingAddress.country));
+    purchase.shippingAddress.state = shippingState.name;
+    purchase.shippingAddress.country = shippingCountry.name;
+
+    purchase.billingAddress = this.checkoutFormGroup.controls['billingAddress'].value;
+    const billingState: State = JSON.parse(JSON.stringify(purchase.shippingAddress.state));
+    const billingCountry:Country = JSON.parse(JSON.stringify(purchase.billingAddress.country));
+    purchase.billingAddress.state = billingState.name;
+    purchase.billingAddress.country = billingCountry.name;
+
+    purchase.order = order;
+    purchase.orderItems = orderItems;
+
+    this.checkoutService.placeOrder(purchase).subscribe(
+      {
+         next: response =>{
+          alert(`주문이 완료되었습니다! 주문번호 :${response.orderTrackingNumber}`)
+          
+          //리셋
+          this.resetCart();
+
+         },
+
+         error: err =>{
+          alert(`에러가 발생했습니다!: ${err.message}`);
+         }
+      }
+    );
 
   }
+
+
+  resetCart() {
+    // 카트 데이터 리셋
+    this.cartService.cartItems = [];
+    this.cartService.totalPrice.next(0);
+    this.cartService.totalQuantity.next(0);
+    
+    // 폼 리셋
+    this.checkoutFormGroup.reset();
+
+    // 상품 페이지로 이동
+    this.router.navigateByUrl("/products");
+  }
+
+
 
   handleMonthsAndYears(){
   
