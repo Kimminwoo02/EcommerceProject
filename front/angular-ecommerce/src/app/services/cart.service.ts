@@ -14,7 +14,18 @@ export class CartService {
 
   totalQuantity: Subject<number> = new BehaviorSubject<number>(0);
 
-  constructor() { }
+  storage: Storage = localStorage;
+
+  constructor() { 
+    
+    let data =JSON.parse(this.storage.getItem('cartItems')!);
+
+    if( data != null) {
+      this.cartItems = data;
+
+      this.computeCartTotals();
+    }
+  }
 
   addToCart(theCartItem: CartItem){
     //중복 체크로직
@@ -44,7 +55,15 @@ export class CartService {
     }
     this.computeCartTotals();
 
+    this.persistCartImtes();
+
   }
+
+  persistCartImtes(){
+    this.storage.setItem('cartItems',JSON.stringify(this.cartItems));
+
+  }
+
   computeCartTotals() {
     let totalPriceValue: number = 0;
     let totalQuantityValue: number = 0 ;
