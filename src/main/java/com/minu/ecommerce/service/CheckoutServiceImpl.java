@@ -38,6 +38,15 @@ public class CheckoutServiceImpl implements CheckoutService{
 
         // 고객과 주문을 매핑
         Customer customer = purchaseRequest.getCustomer();
+
+        String theEmail = customer.getEmail();
+
+        Customer customerFromDB = customerRepository.findByEmail(theEmail);
+
+        if( customerFromDB != null){
+            customer = customerFromDB;
+        }
+
         customer.add(order);
 
         customerRepository.save(customer);
