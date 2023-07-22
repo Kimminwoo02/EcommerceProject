@@ -2,6 +2,7 @@
     position:relative;
     right:0;
     min-width:95px;
+    min-height:40px;
     color:#fff;
     border:10px solid #205b8d;
     -webkit-border-radius:3px;
@@ -10,8 +11,10 @@
     background:#205b8d
 }
 
-/* 
-.login-status-header{
+
+
+
+/* .login-status-header{
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
